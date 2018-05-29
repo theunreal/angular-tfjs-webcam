@@ -57,14 +57,12 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.controllerDataset = new ControllerDataset(this.modelService.NUM_CLASSES);
           }
           this.modelService.nextFrame().then(() => {
-            while (this.STATE === 'RECORDING') {
               tf.tidy(() => {
                 const img = this.webcam.capture();
                 console.log('Added a new example to label: ' + this.selectedLabel.name);
                 this.controllerDataset.addExample(this.mobilenet.predict(img), this.selectedLabel.id);
                 this.modelService.nextFrame();
               });
-            }
           });
      }
   }
